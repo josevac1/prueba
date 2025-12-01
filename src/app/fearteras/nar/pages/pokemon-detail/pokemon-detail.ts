@@ -9,8 +9,8 @@ import { map, switchMap } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PokemonDetail { 
-    private route = inject(ActivatedRoute);
-  private service = inject(SimpsonSservice);
+   // private route = inject(ActivatedRoute);
+  //private service = inject(SimpsonSservice);
 
   //personaje = toSignal(
     //this.route.paramMap.pipe(
