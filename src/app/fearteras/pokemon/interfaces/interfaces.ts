@@ -192,3 +192,46 @@ export interface Type {
     slot: number;
     type: Species;
 }
+
+// Interfaces
+export interface CharacterResult {
+  id: number;
+  name: string;
+  occupation?: string;
+  status?: string;
+  [key: string]: any;
+}
+
+export interface Response {
+  count: number;
+  next: string | null;
+  prev: string | null;
+  pages: number;
+  results: CharacterResult[];
+}
+
+
+export interface CharacterDetail {
+  id: number;
+  name: string;
+  height: number;
+  weight: number;
+  order: number;
+  base_experience: number;
+  sprites: Sprites;
+  stats: Stat[];
+  types: Type[];
+  abilities: Ability[];
+  moves: Move[];
+  [key: string]: any;
+}
+
+export interface Options {
+  offset: number;
+  limit: number;
+}
+
+export interface Response {
+  count: number;
+  results: CharacterResult[];
+}

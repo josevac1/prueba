@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormUtils } from '../../../formuutlis/FormUtils';
 
 const USER = {
   email: 'usuario@ups.edu.ec',
@@ -9,13 +11,13 @@ const USER = {
 
 @Component({
   selector: 'app-inicio-de-seccion-',
-  imports: [ReactiveFormsModule],
-  templateUrl: './inicioDeSeccion .html',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './inicioDeSeccion.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InicioDeSeccion { 
- private fb = inject(FormBuilder);
-  private router = inject(Router); // 2. Inyectar Router
+export class InicioDeSeccion { private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   myForm: FormGroup = this.fb.group({
     email:    ['', [Validators.required, Validators.email]],
@@ -31,34 +33,21 @@ export class InicioDeSeccion {
     const { email, password } = this.myForm.value;
 
     if (email === USER.email && password === USER.password) {
-      this.router.navigate(['/home']);
+      // 4. Asegúrate que en app.routes.ts tengas un path: 'pokemon'
+      this.router.navigate(['/pokemon']); 
     } else {
       alert('Error: Usuario o contraseña incorrectos');
       this.myForm.controls['password'].reset(); 
     }
   }
 
+  // Delegar validaciones a FormUtils
   isValidField(fieldName: string): boolean {
-    const field = this.myForm.controls[fieldName];
-    return !!(field && field.errors && field.touched);
+    return !!FormUtils.isValidField(this.myForm, fieldName);
   }
 
   getFieldError(fieldName: string): string | null {
-    const field = this.myForm.controls[fieldName];
-    if (!field) return null;
-
-    const errors = field.errors || {};
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'Este campo es requerido';
-        case 'minlength':
-          return `Mínimo de ${errors['minlength'].requiredLength} caracteres.`;
-        case 'email':
-          return 'El formato de correo no es válido.';
-      }
-    }
-    return null;
+    return FormUtils.getFieldError(this.myForm, fieldName);
   }
+
 }

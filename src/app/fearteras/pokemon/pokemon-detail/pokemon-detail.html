@@ -1,0 +1,135 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  
+  .font-gba { font-family: 'Press Start 2P', cursive; text-transform: uppercase; }
+  .bg-striped-gba {
+    background-color: #f8f8f8;
+    background-image: linear-gradient(0deg, #e0e0e0 50%, #f8f8f8 50%);
+    background-size: 100% 4px;
+  }
+</style>
+
+<section class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 font-sans select-none bg-[url('https://images.alphacoders.com/133/1330743.png')] bg-cover bg-center relative font-gba overflow-hidden">
+  
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
+
+  <div class="relative z-10 w-full flex flex-col items-center justify-center">
+
+    @if(personaje()) {
+      <div class="w-full max-w-6xl bg-[#706880] border-4 border-[#484050] rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden text-[#404040]">
+
+        <div class="bg-[#507888] h-14 flex items-center justify-between px-6 border-b-4 border-[#385058]">
+          <div class="text-white text-base md:text-lg drop-shadow-[2px_2px_0_rgba(0,0,0,0.4)] tracking-wider">INFO. POKÉMON</div>
+          <div class="flex gap-2">
+            <div class="w-4 h-4 bg-[#305068] rounded-full border-2 border-[#203848] shadow-inner"></div>
+            <div class="w-4 h-4 bg-[#305068] rounded-full border-2 border-[#203848] shadow-inner"></div>
+            <div class="w-4 h-4 bg-[#305068] rounded-full border-2 border-[#203848] shadow-inner"></div>
+          </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row p-4 md:p-6 gap-6">
+
+          <div class="flex-1 bg-white border-4 border-[#d8d0b0] rounded-lg p-3 shadow-inner flex flex-col gap-2">
+             <div class="flex justify-between items-center px-4 py-2 bg-[#f0f0d8] rounded-full border-2 border-[#e0e0c0]">
+               <span class="text-sm text-[#706880]">Nv. {{ personaje()?.base_experience || 50 }}</span>
+               <span class="text-lg uppercase font-bold text-gray-800">{{ personaje()?.name }}</span>
+               <span class="text-lg text-blue-600 font-bold">♂</span>
+             </div>
+             <div class="bg-striped-gba flex-1 border-4 border-[#a8a088] flex items-center justify-center min-h-[280px] relative rounded-lg bg-[#f8f8f8]">
+                @if (personaje()?.sprites?.front_default) {
+                    <img [src]="personaje()?.sprites?.front_default" 
+                        class="w-64 h-64 object-contain drop-shadow-[4px_4px_0_rgba(0,0,0,0.2)] animate-pulse"
+                        style="image-rendering: pixelated; animation-duration: 3s;" />
+                }
+                <div class="absolute bottom-4 right-4">
+                   <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-10 h-10 opacity-80" style="image-rendering: pixelated;">
+                </div>
+             </div>
+          </div>
+
+          <div class="flex-1 bg-[#f8f8d8] border-4 border-[#d8d0b0] rounded-lg p-6 flex flex-col gap-6 shadow-inner text-base relative">
+             <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none bg-[radial-gradient(#484050_1px,transparent_1px)] [background-size:16px_16px]"></div>
+             <div class="relative z-10 flex flex-col gap-5">
+                
+                <div class="flex items-center border-b-2 border-[#e0d8b0] pb-2">
+                   <span class="w-36 text-sm text-[#706880]">Nº POKÉDEX</span>
+                   <span class="text-2xl font-bold">{{ personaje()?.id }}</span>
+                </div>
+
+                <div class="flex items-center border-b-2 border-[#e0d8b0] pb-2">
+                   <span class="w-36 text-sm text-[#706880]">TIPO</span>
+                   <div class="flex gap-2 flex-wrap">
+                     @for(type of personaje()?.types; track type.slot) {
+                       <span [class]="getTypeColor(type.type.name)" 
+                             class="text-white px-4 py-1.5 rounded border-b-4 text-xs uppercase shadow-md font-bold tracking-wider">
+                         {{ type.type.name }}
+                       </span>
+                     }
+                   </div>
+                </div>
+
+                <div class="flex items-center border-b-2 border-[#e0d8b0] pb-2">
+                   <span class="w-36 text-sm text-[#706880]">ALTURA</span>
+                   <span class="text-xl font-bold">{{ (personaje()?.height || 0) / 10 }} m</span>
+                </div>
+
+                <div class="flex items-center border-b-2 border-[#e0d8b0] pb-2">
+                   <span class="w-36 text-sm text-[#706880]">PESO</span>
+                   <span class="text-xl font-bold">{{ (personaje()?.weight || 0) / 10 }} kg</span>
+                </div>
+
+                <div class="flex items-start">
+                   <span class="w-36 text-sm text-[#706880] mt-2">HABIL.</span>
+                   <div class="flex flex-col gap-2">
+                      @for(ab of personaje()?.abilities; track ab.slot) {
+                        <span class="text-sm uppercase font-bold bg-[#e8e0b0] px-4 py-1.5 rounded-md border-b-2 border-[#c8c090] text-[#505050]">
+                          {{ ab.ability?.name }}
+                        </span>
+                      }
+                   </div>
+                </div>
+             </div>
+          </div>
+        </div>
+
+        <div class="px-6 pb-6">
+           <div class="bg-[#f8f8d8] border-4 border-[#d8d0b0] rounded-lg p-6 relative shadow-inner mt-2">
+              <div class="absolute -top-5 left-6 bg-[#f8f8d8] px-4 py-1 rounded-t-lg border-t-4 border-l-4 border-r-4 border-[#d8d0b0]">
+                 <span class="text-xs text-[#706880] font-bold tracking-widest">ESTADÍSTICAS BASE</span>
+              </div>
+              <div class="text-sm leading-9 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-2 mt-2">
+                 @for(stat of personaje()?.stats; track stat.stat.name) {
+                    <div class="flex justify-between items-center border-b-2 border-[#e0d8b0] border-dashed px-2 rounded hover:bg-[#e8e0b0]/50">
+                       <span class="uppercase font-bold text-[#706880]">
+                          {{ stat.stat.name }}
+                       </span>
+                       <span class="font-bold text-xl text-black">{{ stat.base_stat }}</span>
+                    </div>
+                 }
+              </div>
+           </div>
+        </div>
+      </div>
+    }
+
+    <div class="mt-8 flex flex-wrap justify-center gap-6 w-full max-w-4xl">
+      
+      <button (click)="prevPokemon()" 
+              [disabled]="personaje()?.id === 1"
+              class="group relative inline-flex items-center justify-center px-6 py-3 font-bold text-white transition-all duration-200 bg-[#706880] font-gba rounded-l-full border-4 border-[#484050] shadow-[0_8px_0_#302838] active:shadow-none active:translate-y-[8px] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed">
+        <span class="mr-2 text-xl">◄</span> ANT.
+      </button>
+
+      <a routerLink="/pokemon" class="group relative inline-flex items-center justify-center px-8 py-3 font-bold text-white transition-all duration-200 bg-[#c03028] font-gba border-4 border-[#802018] shadow-[0_8px_0_#601008] active:shadow-none active:translate-y-[8px] hover:brightness-110">
+        SALIR
+      </a>
+
+      <button (click)="nextPokemon()" 
+              class="group relative inline-flex items-center justify-center px-6 py-3 font-bold text-white transition-all duration-200 bg-[#706880] font-gba rounded-r-full border-4 border-[#484050] shadow-[0_8px_0_#302838] active:shadow-none active:translate-y-[8px] hover:brightness-110">
+        SIG. <span class="ml-2 text-xl">►</span>
+      </button>
+      
+    </div>
+
+  </div>
+</section>

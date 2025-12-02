@@ -1,14 +1,22 @@
 import { Routes } from '@angular/router';
-import { InicioDeSeccion } from './fearteras/nar/pages/inicioDeSeccion/inicioDeSeccion ';
-import { Home } from './fearteras/nar/pages/home/home';
+import { PokemonPages } from './fearteras/pokemon/pokemon-pages/pokemon-pages';
+import { PokemonDetail } from './fearteras/pokemon/pokemon-detail/pokemon-detail';
+import { InicioDeSeccion } from './fearteras/nar/pages/inicioDeSeccion/inicioDeSeccion';
+
 
 export const routes: Routes = [
   {
     path: '',
     component: InicioDeSeccion,
   },
+
   {
-    path: 'home',
-    component: Home,
+    path: 'pokemon',
+    component: PokemonPages,
+  },
+
+  {
+    path: 'pokemon-detail/:id',
+    component: PokemonDetail,
   },
 ];

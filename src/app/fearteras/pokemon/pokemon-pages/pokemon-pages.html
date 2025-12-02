@@ -1,0 +1,124 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  
+  .font-gba { font-family: 'Press Start 2P', cursive; text-transform: uppercase; }
+  .text-shadow-gba { text-shadow: 2px 2px 0px rgba(0,0,0,0.5); }
+  
+  .retro-row:nth-child(even) { background-color: rgba(0,0,0,0.03); }
+  .retro-row:hover { background-color: #f8e8b0; cursor: pointer; }
+</style>
+ 
+<section class="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-4 font-gba select-none">
+
+  
+<section> 
+  <div class="mb-6 w-full max-w-4xl">
+ <app-hero-pokemon
+  [pokemonCount]="pokemonResource()?.count ?? 0"
+  [totalPages]="totalPages()"
+></app-hero-pokemon>
+  </div></section>
+
+  
+  <h1 class="text-xl md:text-3xl text-white mb-6 text-shadow-gba text-center tracking-widest text-yellow-400">
+    POKÉDEX NACIONAL
+  </h1>
+
+
+
+  <div class="w-full max-w-4xl bg-[#706880] border-4 border-[#484050] rounded-xl shadow-2xl overflow-hidden flex flex-col">
+
+    <div class="bg-[#507888] h-14 flex items-center justify-between px-4 border-b-4 border-[#385058] shrink-0">
+      <div class="flex gap-2">
+        <div class="w-3 h-3 bg-red-500 rounded-full border border-black shadow-inner animate-pulse"></div>
+        <div class="w-3 h-3 bg-yellow-400 rounded-full border border-black shadow-inner"></div>
+        <div class="w-3 h-3 bg-green-500 rounded-full border border-black shadow-inner"></div>
+      </div>
+      
+      <span class="text-white text-xs md:text-sm tracking-widest drop-shadow-md">LISTA DE REGISTROS</span>
+      
+      <div class="w-8 h-4 border-2 border-white/50 rounded flex items-center px-0.5">
+        <div class="h-2 w-full bg-green-400 animate-pulse"></div>
+      </div>
+    </div>
+
+    <div class="bg-[#f8f8d8] border-x-4 border-b-4 border-[#d8d0b0] p-0 flex flex-col relative min-h-[500px]">
+      
+      @if (loading()) {
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-[#f8f8d8]/80 z-20 backdrop-blur-sm">
+           <div class="w-12 h-12 border-4 border-[#706880] border-t-transparent rounded-full animate-spin mb-4"></div>
+           <span class="text-[#706880] text-xs animate-bounce">ACCEDIENDO A DATOS...</span>
+        </div>
+      }
+
+      <div class="flex-1 overflow-y-auto max-h-[600px]">
+        
+        <table class="w-full text-left border-collapse">
+          <thead class="sticky top-0 bg-[#e8e0b0] text-[#706880] border-b-4 border-[#d0c8a0] z-10 shadow-sm">
+            <tr>
+              <th class="py-4 px-4 text-[10px] md:text-xs w-20">ID</th>
+              <th class="py-4 px-4 text-[10px] md:text-xs">NOMBRE</th>
+              <th class="py-4 px-4 text-[10px] md:text-xs text-right">ACCIÓN</th>
+            </tr>
+          </thead>
+          
+          <tbody class="text-sm text-[#404040] font-sans font-bold">
+            @for (p of pokemonResource()?.results ?? []; track p.name) {
+              <tr class="retro-row border-b border-[#e0d8b0] h-14">
+                
+                <td class="px-4 font-mono text-[#706880]">
+                  No. {{ pokemonId(p.url) }}
+                </td>
+                
+                <td class="px-4 capitalize flex items-center h-14">
+                   <div class="w-2 h-2 rounded-full bg-red-500 mr-3 border border-black shadow-sm"></div>
+                   <span class="text-base font-gba text-[#404040]">{{ p.name }}</span>
+                </td>
+                
+                <td class="px-4 text-right">
+                  <a [routerLink]="['/pokemon-detail', pokemonId(p.url)]" 
+                     class="inline-block bg-[#507888] text-white text-[10px] px-3 py-2 rounded border-b-4 border-[#305068] hover:bg-[#608898] hover:border-b-0 hover:translate-y-1 transition-all shadow font-gba">
+                    VER >
+                  </a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        @if (!loading() && (!pokemonResource()?.results || pokemonResource()?.results?.length === 0)) {
+           <div class="flex flex-col items-center justify-center h-full text-gray-400 py-20">
+             <span class="text-4xl mb-2">?</span>
+             <p>NO SE ENCONTRARON POKÉMONS</p>
+           </div>
+        }
+      </div>
+
+    </div>
+
+    <div class="bg-[#706880] p-4 flex flex-col md:flex-row items-center justify-between gap-4 border-t-4 border-[#484050] shrink-0">
+      
+      <div class="bg-[#484050] text-[#a0e0f8] px-4 py-2 rounded text-[10px] shadow-inner border border-gray-600 w-full md:w-auto text-center">
+         PÁGINA {{ currentPage() }} / {{ totalPages() }}
+      </div>
+
+      <div class="flex gap-4 w-full md:w-auto justify-center">
+         <button 
+            (click)="prev()" 
+            [disabled]="currentPage() === 1 || loading()"
+            class="group px-6 py-3 bg-gray-300 text-[#404040] text-xs border-b-4 border-gray-500 active:border-b-0 active:translate-y-1 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white transition-all shadow-lg w-32">
+            ◄ ANT.
+         </button>
+
+         <button 
+            (click)="next()" 
+            [disabled]="currentPage() >= totalPages() || loading()"
+            class="group px-6 py-3 bg-[#f08030] text-white text-xs border-b-4 border-[#c05810] active:border-b-0 active:translate-y-1 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#ff9040] transition-all shadow-lg w-32">
+            SIG. ►
+         </button>
+      </div>
+
+    </div>
+
+  </div>
+</section>

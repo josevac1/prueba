@@ -1,17 +1,27 @@
-<nav>
+<nav class="bg-[#507888] h-16 border-b-4 border-[#385058] flex items-center justify-center gap-8 shadow-lg relative z-50 font-gba select-none">
+  
+  <div class="absolute left-4 flex gap-2 hidden sm:flex">
+    <div class="w-3 h-3 bg-red-500 rounded-full border border-black shadow-inner animate-pulse"></div>
+    <div class="w-3 h-3 bg-yellow-400 rounded-full border border-black shadow-inner"></div>
+  </div>
+
   <a routerLink="/" 
-     routerLinkActive="active" 
-     [routerLinkActiveOptions]="{exact: true}">
-    home
+     routerLinkActive="text-yellow-300 border-b-4 border-yellow-300 pb-1"
+     [routerLinkActiveOptions]="{exact: true}"
+     class="text-white text-xs sm:text-sm tracking-widest hover:text-yellow-100 transition-all border-b-4 border-transparent pb-1 cursor-pointer decoration-0">
+    INICIO
   </a>
   
-  <a routerLink="/productos" 
-     routerLinkActive="active">
-    Productos
+  <div class="h-4 w-[2px] bg-[#305068]"></div>
+
+  <a routerLink="/pokemon" 
+     routerLinkActive="text-yellow-300 border-b-4 border-yellow-300 pb-1"
+     class="text-white text-xs sm:text-sm tracking-widest hover:text-yellow-100 transition-all border-b-4 border-transparent pb-1 cursor-pointer decoration-0">
+    POKÉDEX
   </a>
-  
-  <a routerLink="/contacto" 
-     routerLinkActive="active">
-    Contacto
-  </a>
+
+  <div class="absolute right-4 hidden sm:block">
+     <div class="text-[10px] text-white/50">VER. 1.0</div>
+  </div>
+
 </nav>

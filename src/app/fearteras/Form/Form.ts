@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-form',
   imports: [],
-  templateUrl: './home.html',
-  styleUrl: './home.css',
+  templateUrl: './Form.html',
+  styleUrl: './Form.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Home { }
+export class Form { }

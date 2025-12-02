@@ -1,0 +1,62 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  .font-gba { font-family: 'Press Start 2P', cursive; text-transform: uppercase; }
+  .text-shadow-hero { text-shadow: 4px 4px 0px rgba(0,0,0,0.5); }
+  .bg-game-theme {
+    background-image: url('https://images.alphacoders.com/133/1330743.png');
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+
+<div class="hero min-h-[400px] bg-game-theme relative font-gba overflow-hidden border-b-4 border-[#484050]">
+  
+  <div class="hero-overlay bg-black/50 backdrop-blur-[2px]"></div>
+  
+  <div class="hero-content text-center text-neutral-content z-10 w-full max-w-4xl flex-col">
+    
+    <div class="mb-8 animate-bounce">
+      <h1 class="text-3xl md:text-5xl text-yellow-300 text-shadow-hero leading-relaxed">
+        POKÉDEX<br>NACIONAL
+      </h1>
+    </div>
+
+    <div class="w-full bg-[#f8f8d8] border-4 border-[#d8d0b0] rounded-lg p-2 shadow-[0_10px_0_rgba(0,0,0,0.3)] text-[#404040]">
+      
+      <div class="bg-[#706880] text-white text-[10px] py-1 px-2 mb-2 rounded-sm flex justify-between items-center border border-[#484050]">
+        <span>ESTADO DEL SISTEMA</span>
+        <div class="flex gap-1">
+          <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+          <div class="w-2 h-2 rounded-full bg-green-500"></div>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-[#d8d0b0] border-2 border-[#d8d0b0] bg-white/50 rounded-sm">
+        
+        <div class="stat place-items-center py-4 hover:bg-[#fffced] transition-colors">
+          <div class="stat-figure text-[#507888]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+            </svg>
+          </div>
+          <div class="stat-title font-gba text-[10px] text-[#706880]">REGISTROS</div>
+          <div class="stat-value text-2xl md:text-3xl text-[#507888]">{{ pokemonCount() }}</div>
+          <div class="stat-desc font-gba text-[8px] text-gray-400">CAPTCH. DATA</div>
+        </div>
+
+        <div class="stat place-items-center py-4 hover:bg-[#fffced] transition-colors">
+          <div class="stat-figure text-[#c03028]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+          </div>
+          <div class="stat-title font-gba text-[10px] text-[#706880]">PÁGINAS</div>
+          <div class="stat-value text-2xl md:text-3xl text-[#c03028]">{{ totalPages() }}</div>
+          <div class="stat-desc font-gba text-[8px] text-gray-400">STORAGE BOX</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
